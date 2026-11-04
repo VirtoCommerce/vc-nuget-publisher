@@ -26,6 +26,8 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-24.04
+    # A normal publish takes under a minute; the module waits for this run, up to 30 minutes.
+    timeout-minutes: 15
     # The nuget.org policy names this environment, and the environment admits only main:
     # a run from any other branch gets no nuget.org key.
     environment: nuget-publish
