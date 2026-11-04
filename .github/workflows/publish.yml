@@ -77,12 +77,10 @@ jobs:
           HEAD_REPO=$(jq -r '.head_repository.full_name' <<< "$RUN")
           echo "Run $SOURCE_RUN_ID: $WORKFLOW on $BRANCH ($EVENT), $STATUS"
 
-          # Same rules the per-repo policies and the module templates had: module-ci publishes from
-          # main/master only, the two manual publishing workflows from any branch.
+          # Any branch, as with the per-repo policies: which branches publish is the module workflow's
+          # choice (the templates publish from main/master; some custom modules also from dev).
           case "$WORKFLOW" in
-            module-ci.yml)
-              [[ "$BRANCH" == main || "$BRANCH" == master ]] || fail "module-ci.yml publishes from main or master only, not '$BRANCH'." ;;
-            publish-nugets.yml|module-release-hotfix.yml) ;;
+            module-ci.yml|publish-nugets.yml|module-release-hotfix.yml) ;;
             *) fail "Workflow '$WORKFLOW' may not publish NuGet packages." ;;
           esac
           [[ "$EVENT" == push || "$EVENT" == workflow_dispatch ]] || fail "Runs started by '$EVENT' may not publish."

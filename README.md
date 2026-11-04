@@ -25,8 +25,8 @@ repository is kept to a small group, and the push runs only from `main` (see Set
    A failed push fails the module run.
 3. `publish.yml` checks the request and stops unless:
    - the repository is `VirtoCommerce/vc-module-*`;
-   - the run is `module-ci.yml` on `main`/`master`, or `publish-nugets.yml` or
-     `module-release-hotfix.yml` on any branch;
+   - the run is `module-ci.yml`, `publish-nugets.yml` or `module-release-hotfix.yml`, on any
+     branch (as with the per-repo policies; the module workflow decides which branches publish);
    - the run was started by `push` or `workflow_dispatch` in that repository, not a fork;
    - the run is still in progress, so it is waiting for this publish;
    - the artifact was uploaded by that run.
